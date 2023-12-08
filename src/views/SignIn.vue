@@ -2,28 +2,27 @@
   <h1>Sign In</h1>
   <p><input type="text" placeholder="Email" v-model="email"/></p>
   <p><input type="password" placeholder="Password" v-model="password"/></p>
-  <p><button @click="register">Submit</button></p>
+  <p><button @click="signIn">Submit</button></p>
   <p><Button @click="signInWithGoogle">Sign In With Google</Button></p>
 </template>
 <script setup>
-import{ref} from "vue";
-import {getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth"
-
+import { ref } from "vue";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
 import router from "@/router/index.js";
-import {useRouter} from "vue-router";
+
 const auth = getAuth();
+const db = getFirestore();
 
-const email = ref("")
-const password = ref("")
-const errMsg = ref()
-const register = () => {
+const email = ref("");
+const password = ref("");
+const errMsg = ref("");
+
+const signIn = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
-      .then((userCredential)=>{
-        console.log("Successfully signed in!")
-        createUserCollection(db, userCredential.user.uid);
-        console.log(auth.currentUser)
-
-        router.push('/feed')
+      .then((userCredential) => {
+        console.log("Successfully signed in!");
+        router.push('/feed');
       })
       .catch((error) => {
         console.log(error.code);
@@ -41,18 +40,31 @@ const register = () => {
             errMsg.value = "Email or password was incorrect";
             break;
         }
-      })
-}
+      });
+};
 
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
-  signInWithPopup(getAuth(), provider)
+  signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result.user);
+        // Update the user document with the latest Google account information
+        createUserCollection(db, result.user.uid, {
+          email: result.user.email,
+          name: result.user.displayName,
+          // other Google-specific data
+        });
         router.push("/feed");
       })
       .catch((error) => {
-  console.log(error);
+        console.log(error);
       });
+};
+
+const createUserCollection = async (db, userId, additionalData = {}) => {
+  const userDoc = doc(collection(db, 'users'), userId);
+  await setDoc(userDoc, {
+    ...additionalData,
+  }, { merge: true });
 };
 </script>
