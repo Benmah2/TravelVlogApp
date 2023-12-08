@@ -4,7 +4,6 @@
     <div v-if="loading">Loading...</div>
     <div v-else>
       <div v-for="item in userData" :key="item.id">
-        <!-- Display your data here -->
         <p>{{ item.title }}</p> <!-- Example -->
       </div>
     </div>
@@ -26,7 +25,7 @@ onMounted(() => {
     if (user) {
       await fetchUserData(user.uid);
     } else {
-      // Handle the case where the user is not logged in
+
     }
   });
 });
