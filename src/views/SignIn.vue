@@ -18,9 +18,9 @@ const password = ref("")
 const errMsg = ref()
 const register = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
-      .then((data)=>{
+      .then((userCredential)=>{
         console.log("Successfully signed in!")
-
+        createUserCollection(db, userCredential.user.uid);
         console.log(auth.currentUser)
 
         router.push('/feed')
@@ -52,7 +52,7 @@ const signInWithGoogle = () => {
         router.push("/feed");
       })
       .catch((error) => {
-
+  console.log(error);
       });
 };
 </script>
