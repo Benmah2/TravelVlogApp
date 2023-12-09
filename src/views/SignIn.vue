@@ -17,7 +17,6 @@ const db = getFirestore();
 const email = ref("");
 const password = ref("");
 const errMsg = ref("");
-
 const signIn = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
       .then((userCredential) => {
