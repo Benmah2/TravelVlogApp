@@ -33,6 +33,8 @@ const signIn = () => {
           case "auth/user-not-found":
             errMsg.value = "No account with that email was found";
             break;
+
+            /test
           case "auth/wrong-password":
             errMsg.value = "Incorrect password";
             break;
