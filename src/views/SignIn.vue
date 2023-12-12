@@ -13,7 +13,6 @@ import router from "@/router/index.js";
 
 const auth = getAuth();
 const db = getFirestore();
-//HH
 const email = ref("");
 const password = ref("");
 const errMsg = ref("");
@@ -32,8 +31,6 @@ const signIn = () => {
           case "auth/user-not-found":
             errMsg.value = "No account with that email was found";
             break;
-
-            /test
           case "auth/wrong-password":
             errMsg.value = "Incorrect password";
             break;
