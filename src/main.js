@@ -1,34 +1,42 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from "./router"
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore } from 'firebase/firestore';
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import router from './router';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-    apiKey: "AIzaSyBr1jbG6VeJ50QOIKxws3qQ6IN79GnN_HM",
-    authDomain: "exam2023-b5781.firebaseapp.com",
-    projectId: "exam2023-b5781",
-    storageBucket: "exam2023-b5781.appspot.com",
-    messagingSenderId: "1021580877020",
-    appId: "1:1021580877020:web:d76eda661d4ef66516e819",
-    measurementId: "G-D1X82NSEPH"
-};
 
-// Initialize Firebase
-initializeApp(firebaseConfig);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const vueApp = createApp(App);
+import { IonicVue } from '@ionic/vue';
 
-vueApp.use(router);
+/* Core CSS required for Ionic components to work properly */
+import '@ionic/vue/css/core.css';
 
-vueApp.mount('#app');
+/* Basic CSS for apps built with Ionic */
+import '@ionic/vue/css/normalize.css';
+import '@ionic/vue/css/structure.css';
+import '@ionic/vue/css/typography.css';
+
+/* Optional CSS utils that can be commented out */
+import '@ionic/vue/css/padding.css';
+import '@ionic/vue/css/float-elements.css';
+import '@ionic/vue/css/text-alignment.css';
+import '@ionic/vue/css/text-transformation.css';
+import '@ionic/vue/css/flex-utils.css';
+import '@ionic/vue/css/display.css';
+
+/* Theme variables */
+import './theme/variables.css';
+
+// Above the createApp() line
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
+
+
+
+const app = createApp(App)
+  .use(IonicVue)
+  .use(router);
+
+
+defineCustomElements(window);
+router.isReady().then(() => {
+  app.mount('#app');
+});

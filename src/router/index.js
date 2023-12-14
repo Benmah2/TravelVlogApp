@@ -1,49 +1,91 @@
-import {createRouter, createWebHistory} from "vue-router";
+import { createRouter, createWebHistory } from '@ionic/vue-router';
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 
+const auth = getAuth();
+
+import HomePage from '../views/HomePage.vue';
+import NewImage from '../views/NewImage.vue';
+import DetailPage from "@/views/DetailPage.vue";
+import tabs from "../components/tabs.vue";
+import LogIn from '../views/SignIn.vue';
+import {push} from "ionicons/icons";
+
+
+
 const router = createRouter({
-    history:createWebHistory(),
-    routes: [
-        {path: "/", component:() => import("../views/Home.vue")},
-        {path: "/register", component:() => import("../views/Register.vue")},
-        {path: "/sign-in", component:() => import("../views/SignIn.vue")},
-        {path: "/feed",
-            component:() => import("../views/Feed.vue"),
-        meta: {
-        requiresAuth: true,
+
+
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/',
+      component: tabs,
+      children: [
+        {
+          path: '',
+          redirect: '/home',
         },
+
+        {
+          path: '/home',
+          name: 'Home',
+          component: HomePage,
+          meta: {
+            requiresAuth: true,
+          },
         },
-    ]
+        {
+          path: "/new-image",
+          name: "NewImage",
+          component: NewImage,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "/detail/:id",
+          name: "Detail",
+          component: DetailPage,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+
+      ]
+    },
+    {
+      path: "/sign-in",
+      component: LogIn
+    },
+  ],
+})
+
+let isAuthResolved = false;
+
+onAuthStateChanged(auth, (user) => {
+  isAuthResolved = true; // Auth state is resolved
 });
 
-const getCurrentUser = () => {
-    return new Promise((resolve, reject) => {
-        const removeListener = onAuthStateChanged(
+router.beforeEach(async (to, from, next) => {
+  // Wait until the auth state is resolved
+  if (!isAuthResolved) {
+    await new Promise((resolve) => {
+      const unsubscribe = onAuthStateChanged(auth, () => {
+        unsubscribe();
+        resolve();
+      });
+    });
+  }
 
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const isAuthenticated = auth.currentUser;
 
-        getAuth(),
-            (user) => {
-            removeListener();
-            resolve(user);
-            },
-            reject
-        )})
-};
-
-router.beforeEach(async(to, from, next) => {
-        if (to.matched.some((record) => record.meta.requiresAuth)) {
-
-
-            if (await getCurrentUser()) {
-                next();
-            } else {
-                alert("You need to be logged in to access this page!");
-                next("/");
-            }
-        } else {
-            next();
-        }
-    }
-)
+  if (requiresAuth && !isAuthenticated) {
+    next('/sign-in'); // Redirect to sign-in page if not authenticated
+  }
+  else {
+    next(); // Proceed to the desired route
+  }
+});
 
 export default router;
