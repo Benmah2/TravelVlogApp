@@ -25,13 +25,11 @@
 
           <ion-card-content>
             <ion-item>
-              <ion-label position="floating">Email</ion-label>
-              <ion-input type="text" v-model="email" placeholder="Enter your email"></ion-input>
+              <ion-input label="Email" label-placement="floating" type="text" v-model="email" placeholder="Enter your email"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input type="password" v-model="password" placeholder="Enter your password"></ion-input>
+              <ion-input label="Password" label-placement="floating" type="password" v-model="password" placeholder="Enter your password"></ion-input>
             </ion-item>
 
             <ion-button expand="block" @click="signIn" class="ion-margin-top">Submit</ion-button>
@@ -49,13 +47,11 @@
 
           <ion-card-content>
             <ion-item>
-              <ion-label position="floating">Email</ion-label>
-              <ion-input type="text" v-model="registerEmail" placeholder="Enter your email"></ion-input>
+              <ion-input label="Email" label-placement="floating" type="text" v-model="registerEmail" placeholder="Enter your email"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input type="password" v-model="registerPassword" placeholder="Enter your password"></ion-input>
+              <ion-input label="Password" label-placement="floating" type="password" v-model="registerPassword" placeholder="Enter your password"></ion-input>
             </ion-item>
 
             <ion-button expand="block" @click="register" class="ion-margin-top">Register</ion-button>
