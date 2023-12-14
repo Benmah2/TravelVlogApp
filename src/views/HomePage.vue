@@ -3,11 +3,11 @@
 
 
 <script setup>
-import { IonContent, IonGrid, IonRow , IonCol ,IonButtons, IonButton, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonContent, IonGrid, IonRow , IonCol , IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCard, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 
 import { ref, onMounted } from 'vue';
 
-import { collection, onSnapshot, addDoc, getDocs, getFirestore } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase/firebase"
 
 const imageCollectionRef = collection(db, "images")
@@ -56,7 +56,7 @@ fbImages.push(image)
 
       <ion-col size="3" v-for="image in images" :key="image.id" :router-link="'/detail/' + image.id" >
         <ion-card>
-        <img  :src="image.imageURL" class="grid-image" />
+        <img  :src="image.imageURL" class="grid-image"  alt="Image Not found"/>
         <ion-card-header>
           <ion-card-title>{{ image.title }}</ion-card-title>
         </ion-card-header>
