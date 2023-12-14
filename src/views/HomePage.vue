@@ -41,42 +41,38 @@ fbImages.push(image)
 
 <template>
   <ion-page>
-    <ion-header class="q" :translucent="true">
-      <ion-toolbar class="z">
+    <ion-header :translucent="true">
+      <ion-toolbar>
         <ion-title>Bildestrøm</ion-title>
-<!--        <ion-buttons slot="end">
-          <ion-button router-link="/new-image">Legg til flere bilder +</ion-button>
-        </ion-buttons>-->
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
-<ion-grid class="grid" >
-  <ion-row>
-
-      <ion-col size="3" v-for="image in images" :key="image.id" :router-link="'/detail/' + image.id" >
-        <ion-card>
-        <img  :src="image.imageURL" class="grid-image"  alt="Image Not found"/>
-        <ion-card-header>
-          <ion-card-title>{{ image.title }}</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-          {{ image.description }}
-        </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-  </ion-row>
-</ion-grid>
+      <ion-grid class="grid">
+        <ion-row>
+          <ion-col
+              size="12"
+              size-md="3"
+              v-for="image in images"
+              :key="image.id"
+              :router-link="'/detail/' + image.id">
+            <ion-card>
+              <img :src="image.imageURL" class="grid-image" alt="Image Not found"/>
+              <ion-card-header>
+                <ion-card-title>{{ image.title }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{ image.description }}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-content>
   </ion-page>
 </template>
 
-
-
 <style scoped>
-
 .grid-image {
   width: auto;
   height: 25vh;
@@ -84,7 +80,7 @@ fbImages.push(image)
   border-radius: 10px;
 }
 .grid {
-  background-color: white ;
+  background-color: white;
 }
 
 ion-row {
@@ -105,10 +101,16 @@ ion-col {
   color: black;
   margin: 0.3%;
   border-radius: 10px;
-  background-color: #d7bea8 ;
+  background-color: #d7bea8;
   padding: 0%;
   text-align: center;
+}
 
+/* Additional styles for smaller screens */
+@media (max-width: 768px) {
+  .grid-image {
+    height: 40vh; /* Adjust as needed */
+  }
 }
 </style>
 
