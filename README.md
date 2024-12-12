@@ -1,5 +1,3 @@
-# TravelVlogApp
-My exam project. Where me and my classmate made a travel vlog app which connected to firebase
-Sadly the servers are not up using firebase. So it is not functioning.
-As i am working on other projects at the moment, i will not have time to fix this issue so i leave it as it is.
-You can still log on fine, just not post, Add pictures, see pictures and so on.
+For my exam project, my classmate and I developed a travel vlog app that connected to Firebase. 
+Unfortunately, the servers are currently inactive, meaning the app isn't functional at the moment. 
+Since I'm focused on other projects right now, I won't have time to address this issue, so I’ve decided to leave it as it is.
